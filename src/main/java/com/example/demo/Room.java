@@ -1,15 +1,41 @@
 package com.example.demo;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+//Room is a domain class
 @Entity
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String roomName;
+    @Column(nullable = false)
+    private String name;
 
     @Column(nullable = false)
     private String address;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
