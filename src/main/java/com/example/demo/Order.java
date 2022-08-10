@@ -8,6 +8,15 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 //user, room
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false)
+    private User user;
+
+
+    @ManyToOne
+    @JoinColumn(name="room_id", nullable=false)
+    private Room room; //one room to many orders
     @Column(nullable = false)
     private String startTime;
 
@@ -16,6 +25,12 @@ public class Order {
 
     public Long getId() {
         return id;
+    }
+    public User getUser() {
+        return user;
+    }
+    public Room getRoom() {
+        return room;
     }
 
     public String getStartTime() {
@@ -26,11 +41,17 @@ public class Order {
         return endTime;
     }
 
-    public void setName(String startTime) {
-        this.startTime= startTime;
+    public void setUser(User user) {
+        this.user= user;
+    }
+    public void setRoom(Room room) {
+        this.room= room;
     }
 
     public void setEndTime(String endTime) {
         this.endTime= endTime;
+    }
+    public void setStartTime(String startTime) {
+        this.startTime= startTime;
     }
 }

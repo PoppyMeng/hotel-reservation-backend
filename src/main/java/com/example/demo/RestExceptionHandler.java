@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ RoomNotFoundException.class })
-    protected ResponseEntity<Object> handleNotFound(
+    protected ResponseEntity<Object> handleNoFound(
             Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, "Room not found",
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
@@ -27,5 +27,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getLocalizedMessage(),
                 new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler({ UserNotFoundException.class })
+    public ResponseEntity<Object> handleNotFound(
+            Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, "User not found",
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+    @ExceptionHandler({ OrderNotFoundException.class })
+    public ResponseEntity<Object> NotFound(
+            Exception ex, WebRequest request) {
+        return handleExceptionInternal(ex, "Order not found",
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 }

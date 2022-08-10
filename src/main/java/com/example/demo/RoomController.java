@@ -12,9 +12,13 @@ public class RoomController {
 
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private RoomService roomService;
 
     @GetMapping
-    public Iterable<Room> findAll() {
+    public List<Room> findAll() {
         return roomRepository.findAll();
     }
 
@@ -28,6 +32,10 @@ public class RoomController {
     public Room findOne(@PathVariable Long id) {
         return roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
+    }
+    @GetMapping("/{roomId}/orders")
+    public List<Order> findOrderByRoomId(@PathVariable Long roomId) {
+        return orderRepository.findByRoomId(roomId);
     }
 
 }

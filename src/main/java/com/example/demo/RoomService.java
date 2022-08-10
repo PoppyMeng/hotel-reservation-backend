@@ -4,41 +4,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class RoomService {
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private OrderRepository orderRepository;
 
+    public List<Room> findAvailableRooms(String start, String end) {
+        List<Room> res = new ArrayList<>();
+        List<Room> rooms = roomRepository.findAll();
+        for (Room room : rooms) {
+            List<Order> roomOrders = orderRepository.findByRoomId(room.getId());
+            for (Order order : roomOrders) {
+                if (Integer.valueOf(order.getStartTime()) < Integer.valueOf(end) || Integer.valueOf(order.getEndTime()) > Integer.valueOf(start)) {
+                    break;
+                }
+            }
+            res.add(room);
 
-//    List<Room> findAvailableRooms(String in, String out){
-//        int roomNum=numOfRooms();
-//
-//
-//
-//
-//    }
-//    @GetMapping
-//    public List findAvailableRoom( String inTime, String outTime){
-//        return roomRepository.findByTime(inTime, outTime)
-//                .orElseThrow(RoomNotFoundException::new);
-//    }
-
- //ArrayList<Order> reservation =[[1,2], [2,5], [6,9], [3,6]]
-//    .sort() by order.startTime => [[1,2], [2,5], [3,6],[6,9]]
-//    priorityqueue=[]
-//    roomNeeded=0
-//    for r in reservations:
-//        if not priorityqueue or priorityqueue[0]>r[0]:
-//            roomNeeded+=1
-//        else:
-//            heapq.pop(priorityqueue)
-//        heapq.add(priorityqueue, r[1])
-//        return len(reservations)-roomNeeded //number of available rooms
-
-
-    //parse string into localdatetime
-    //don't use datetime!!
+        }
+        return res;
+    }
 }
+
+

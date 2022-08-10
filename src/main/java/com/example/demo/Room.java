@@ -19,6 +19,9 @@ public class Room {
     @Column(nullable = false)
     private String address;
 
+    @OneToMany(mappedBy="room")
+    private List<Order> orders;
+    public List<Order> getOrders(){ return orders;}
     public Long getId() {
         return id;
     }
