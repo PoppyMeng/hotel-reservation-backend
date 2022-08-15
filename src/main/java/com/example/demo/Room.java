@@ -25,7 +25,7 @@ public class Room {
 
     @Column(nullable = false)
     private String name;
-    @Column (columnDefinition = "integer default 100")
+    @Column (columnDefinition = "integer default 100", nullable=false)
     private Integer pricePerNight;
     @Column(nullable = false)
     private String address;
@@ -61,7 +61,7 @@ public class Room {
     }
 
     public void setPricePerNight(Integer price) {
-        this.pricePerNight = pricePerNight;
+        this.pricePerNight = price;
     }
 }
 
