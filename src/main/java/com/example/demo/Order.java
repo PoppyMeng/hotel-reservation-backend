@@ -1,9 +1,21 @@
 package com.example.demo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+
 @Entity
 @Table (name="orders")
 public class Order {
+    public Order( String startTime, String endTime, User user, Room room) {
+        this.endTime= endTime;
+        this.startTime= startTime;
+        this.user= user;
+        this.room= room;
+    }
+    public Order(){
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

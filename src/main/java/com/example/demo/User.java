@@ -5,8 +5,14 @@ import java.util.*;
 @Entity
 @Table (name="users")
 public class User {
-
-
+    public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
+        this.orders=new ArrayList<Order>();
+    }
+    public User(){
+        this.orders=new ArrayList<Order>();
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -27,15 +33,12 @@ public class User {
         return email;
     }
 
-    public String getName() {
+    public String getUserName() {
         return userName;
     }
 
-    public List<Order> getOrder() {
-        return orders;
-    }
 
-    public void setName(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
     public void setEmail(String email) {

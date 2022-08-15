@@ -12,12 +12,12 @@ import java.util.Optional;
 
 public interface UserRepository extends CrudRepository<User, Long> {
 
-    List<User> findUser(String userName);
+    List<User> findUserByUserName(String userName);
 
-    Optional<User> findById(Long id);
-    List<User> findByEmail(String email);
-    List<User> findAll();
-    User saveOrUpdate(User user);
+//    Optional<User> findById(Long id);
+    Optional<User> findByEmail(String email);
+//    List<User> findAll();
+//    User saveOrUpdate(User user);
 
 
 }

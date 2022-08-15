@@ -6,10 +6,10 @@ import java.util.Optional;
 
 public interface OrderRepository extends CrudRepository<Order, Long> {
 
-    Optional<Order> findById(Long id);
-    Iterable <Order> findAll();
+//    Optional<Order> findById(Long id);
+//    Iterable <Order> findAll();
     List<Order> findByUserId(Long userId);
     List<Order> findByRoomId(Long roomId);
-    Order saveOrUpdate(Order order);
+//    Order saveOrUpdate(Order order);
 
 }

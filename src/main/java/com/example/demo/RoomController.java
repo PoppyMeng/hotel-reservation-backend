@@ -1,15 +1,14 @@
 package com.example.demo;
-
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
-
     @Autowired
     private RoomRepository roomRepository;
     @Autowired
@@ -18,24 +17,41 @@ public class RoomController {
     private RoomService roomService;
 
     @GetMapping
-    public List<Room> findAll() {
-        return roomRepository.findAll();
+    public Iterable<ShallowRoomResponse> findAll() {
+        return StreamSupport.stream(roomRepository.findAll().spliterator(),false)
+                .map(ShallowRoomResponse::new).collect(Collectors.toList());
+    }
+    @GetMapping("/available/{start}/{end}")
+    public Iterable<ShallowRoomResponse> findAvailableRoom(@PathVariable String start, @PathVariable String end) {
+        return roomService.findAvailableRooms(start, end).stream()
+                .map(ShallowRoomResponse::new).collect(Collectors.toList());
     }
 
-
     @GetMapping("/roomName/{roomName}")
-    public List<Room> findByName(@PathVariable String roomName) {
-        return roomRepository.findByName(roomName);
+    public List<ShallowRoomResponse> findByName(@PathVariable String roomName) {
+        return roomRepository.findByName(roomName).stream()
+                .map(ShallowRoomResponse::new).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
-    public Room findOne(@PathVariable Long id) {
-        return roomRepository.findById(id)
+    public ShallowRoomResponse findById(@PathVariable Long id) {
+        Room room=roomRepository.findById(id)
                 .orElseThrow(RoomNotFoundException::new);
+        return new ShallowRoomResponse(room);
     }
-    @GetMapping("/{roomId}/orders")
-    public List<Order> findOrderByRoomId(@PathVariable Long roomId) {
-        return orderRepository.findByRoomId(roomId);
+    @GetMapping("/roomId/{roomId}/orders")
+    public List<ShallowOrderResponse> findOrderByRoomId(@PathVariable Long roomId) {
+        Room room=roomRepository.findById(roomId)
+                .orElseThrow(RoomNotFoundException::new);
+        return room.getOrders().stream().map(ShallowOrderResponse::new).collect(Collectors.toList());
+    }
+
+
+    @PostMapping
+    private ShallowRoomResponse createRoom(@RequestBody Room room)
+    {
+        return new ShallowRoomResponse(roomRepository.save(room));
+
     }
 
 }

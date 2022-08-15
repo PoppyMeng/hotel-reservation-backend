@@ -8,6 +8,16 @@ import java.util.Optional;
 //Room is a domain class
 @Entity
 public class Room {
+    public Room(String name, String address, Integer pricePerNight) {
+        this.name = name;
+        this.address = address;
+        this.pricePerNight = pricePerNight;
+        this.orders = new ArrayList<Order>();
+    }
+
+    public Room() {
+        this.orders = new ArrayList<Order>();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,13 +25,18 @@ public class Room {
 
     @Column(nullable = false)
     private String name;
-
+    @Column (columnDefinition = "integer default 100", nullable = false)
+    private Integer pricePerNight;
     @Column(nullable = false)
     private String address;
 
-    @OneToMany(mappedBy="room")
+    @OneToMany(mappedBy = "room")
     private List<Order> orders;
-    public List<Order> getOrders(){ return orders;}
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,6 +48,9 @@ public class Room {
     public String getAddress() {
         return address;
     }
+    public Integer getPricePerNight() {
+        return pricePerNight;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -41,4 +59,10 @@ public class Room {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public void setPricePerNight(Integer price) {
+        this.pricePerNight = pricePerNight;
+    }
 }
+
+//DB in heroku, clear out existing data
