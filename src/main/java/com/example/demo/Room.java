@@ -25,7 +25,7 @@ public class Room {
 
     @Column(nullable = false)
     private String name;
-    @Column (columnDefinition = "integer default 100", nullable = false)
+    @Column (columnDefinition = "integer default 100")
     private Integer pricePerNight;
     @Column(nullable = false)
     private String address;
