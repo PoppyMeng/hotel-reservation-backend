@@ -7,7 +7,7 @@ import java.util.*;
 public class User {
     public User(String userName, String email) {
         this.userName = userName;
-        this.email = email;
+        this.email = email.toLowerCase();
         this.orders=new ArrayList<Order>();
     }
     public User(){
@@ -42,7 +42,7 @@ public class User {
         this.userName = userName;
     }
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
     public void setOrder(List<Order> orders) {
         this.orders = orders;
